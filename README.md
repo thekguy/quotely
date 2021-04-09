@@ -11,7 +11,7 @@ A command line interface written in Java which takes as an argument English or R
 
 [(Back to top)](#table-of-contents)
 
-java -jar target/quotely-0.0.1-SNAPSHOT.jar [English|Russian]
+java -jar target/quotely-0.0.1-SNAPSHOT-jar-with-dependencies.jar [English|Russian]
 
 
 # Installation
@@ -21,4 +21,4 @@ java -jar target/quotely-0.0.1-SNAPSHOT.jar [English|Russian]
 1. Install JDK 11 and Maven.
 2. Clone this repository into a directory named quotely.
 3. Run `cd quotely`.
-4. Run `mvn install`.
+4. Run `mvn clean compile assembly:single`.

@@ -1,9 +1,22 @@
 package quotely;
 
+import java.util.Map;
+
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.ClientBuilder;
+
 public class Quotely {
     
+    public static final String RU = "ru";
+    public static final String EN = "en";
     public static final String ENGLISH = "English";
     public static final String RUSSIAN = "Russian";
+    private QuoteFinder quoteFinder;
+    
+    Map<String, String> languageToForismaticLanguage = Map.of(
+            ENGLISH, EN,
+            RUSSIAN, RU
+        );
 
     public static void main( String[] args )
     {
@@ -14,19 +27,23 @@ public class Quotely {
             if (args.length == 1) {
                 language = args[0];
             }
-            Quotely quotely = new Quotely();
+            Client client = ClientBuilder.newBuilder().build().register(MyCustomResponseReader.class);
+            Quotely quotely = new Quotely(new QuoteFinder(client));
             System.out.println(quotely.getQuote(language));
         }
     }
+    
+    Quotely(QuoteFinder quoteFinder) {
+        this.quoteFinder = quoteFinder;
+    }
 
     String getQuote(String language) {
-        if (language.equals(ENGLISH)) {
-            return "english quote";
-        } else if (language.equals(RUSSIAN)) {
-            return "russian quote";
-        } else {
-            throw new IllegalArgumentException("Expected 'Russian' or 'English'.");
-        }
+        final Quote quote = quoteFinder.getQuote(getForismaticLanguage(language));
+        return quote.quoteText + "\n - " + quote.quoteAuthor; 
+    }
+
+    String getForismaticLanguage(String language) {
+        return languageToForismaticLanguage.get(language);
     }
 
 }
