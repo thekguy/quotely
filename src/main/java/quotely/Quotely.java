@@ -21,7 +21,7 @@ public class Quotely {
     public static void main( String[] args )
     {
         if (args.length > 1 || (args.length == 1 && (!args[0].equals(RUSSIAN) && !args[0].equals(ENGLISH)))) {
-            System.out.println( "Usage: java -jar quotely.jar [English|Russian]" );
+            System.out.println( "Usage: java -jar target/quotely-0.0.1-SNAPSHOT-jar-with-dependencies.jar [English|Russian]" );
         } else {
             String language = ENGLISH;
             if (args.length == 1) {
